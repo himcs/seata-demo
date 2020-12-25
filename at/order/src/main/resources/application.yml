@@ -1,0 +1,26 @@
+MYSQL_HOST: himcs.io
+debug: true
+server:
+  port: 8400
+spring:
+  application:
+    name: order-service
+  datasource:
+    password: root
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/seata-order?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true        //格式化sql语句
+        show_sql: true          //控制台是否打印
+        use_sql_comments: true  //指出是什么操作生成了该语句
+  logging:
+    level:
+      io.himcs.seata.order.repository: debug #sql日志打印
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group # 事务分组

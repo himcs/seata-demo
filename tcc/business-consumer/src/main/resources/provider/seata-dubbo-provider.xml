@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="business-consumer"/>
+
+    <!-- 使用multicast广播注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <!-- 用dubbo协议在随机端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="-1"/>
+
+    <!--    服务提供者设置-->
+    <dubbo:provider timeout="10000" threads="10" threadpool="fixed" loadbalance="roundrobin"/>
+
+    <!-- 初始化 Seata TCC 全局事务扫描器 -->
+    <bean class="io.seata.spring.annotation.GlobalTransactionScanner">
+        <constructor-arg value="tcc-sample"/>
+        <constructor-arg value="my_test_tx_group"/>
+    </bean>
+
+    <!--    和远程的 OrderAction 进行调用-->
+    <dubbo:reference id="orderAction" interface="io.himcs.tcc.orderprovider.action.OrderAction"/>
+    <dubbo:reference id="storageAction" interface="io.himcs.tcc.storageprovider.action.StorageAction"/>
+</beans>

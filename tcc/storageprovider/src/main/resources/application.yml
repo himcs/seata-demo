@@ -1,0 +1,15 @@
+MYSQL_HOST: himcs.io
+spring:
+  application:
+    name: storageprovider
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tcc-storage?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    password: root
+    username: root
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: true
+server:
+  port: 8602

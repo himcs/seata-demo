@@ -1,0 +1,11 @@
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+services:
+  order-service: ORDER-SERVICE
+  points-service: POINTS-SERVICE
+  storage-service: STORAGE-SERVICE
